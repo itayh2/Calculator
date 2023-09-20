@@ -16,11 +16,7 @@ function App() {
     setCalc(calc + value);
 
     if (!ops.includes(value)) {
-      try {
         setResult(eval(calc + value).toString());
-      } catch (error) {
-        setResult("Error");
-      }
     }
   };
   const createDigits = () => {
@@ -40,11 +36,7 @@ function App() {
     if (calc === "") {
       return;
     }
-    try {
-      setCalc(eval(calc).toString());
-    } catch (error) {
-      setCalc("Error");
-    }
+      setCalc(eval(calc).toString());  
   };
 
   const deleteLast = () => {
@@ -55,17 +47,9 @@ function App() {
     setCalc(value);
 
     if (ops.includes(value.slice(-1))) {
-      try {
         setResult(eval(value.toString().slice(0, -1)));
-      } catch (error) {
-        setResult("Error");
-      }
     } else {
-      try {
         setResult(eval(value).toString());
-      } catch (error) {
-        setResult("Error");
-      }
     }
   };
   return (
