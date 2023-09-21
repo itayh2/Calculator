@@ -16,7 +16,7 @@ function App() {
     setCalc(calc + value);
 
     if (!ops.includes(value)) {
-        setResult(eval(calc + value).toString());
+      setResult(eval(calc + value).toString());
     }
   };
   const createDigits = () => {
@@ -36,20 +36,30 @@ function App() {
     if (calc === "") {
       return;
     }
-      setCalc(eval(calc).toString());  
+
+    // Check if the expression ends with an operator
+    const lastChar = calc.slice(-1);
+
+    if(ops.includes(lastChar)){
+      return;
+    }
+
+    setCalc(eval(calc).toString());
   };
 
   const deleteLast = () => {
     if (calc === "") {
       return;
     }
+
     const value = calc.slice(0, -1);
     setCalc(value);
-
-    if (ops.includes(value.slice(-1))) {
-        setResult(eval(value.toString().slice(0, -1)));
+    if (value === "") {
+      setResult("");
+    } else if (ops.includes(value.slice(-1))) {
+      setResult(eval(value.toString().slice(0, -1)));
     } else {
-        setResult(eval(value).toString());
+      setResult(eval(value).toString());
     }
   };
   return (
