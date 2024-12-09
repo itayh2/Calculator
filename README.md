@@ -39,5 +39,26 @@ A simple and intuitive web-based calculator application built using React, featu
 - Flexbox layout
 - Box shadow for depth
 
+## Installation 
+
+Clone the repository:
+bashCopygit clone https://github.com/itayh2/react-calculator.git
+
+Navigate to the project directory:
+cd react-calculator
+
+Install dependencies:
+npm install
+
+Start the development server:
+npm start
+
+How to Use:
+
+Click numerical buttons to input numbers
+Use operation buttons (+, -, ×, ÷) to perform calculations
+Press "=" to see the result
+Use "AC" to clear the current calculation
+
 ## License
 This project is open-source and available under the MIT License.
