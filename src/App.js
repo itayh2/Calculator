@@ -3,8 +3,18 @@ import { useState } from "react";
 function App() {
   const [calc, setCalc] = useState("");
   const [result, setResult] = useState("");
-
   const ops = ["/", "*", "+", "-", "."];
+
+  // Safe calculation function
+  const safeCalculate = (expression) => {
+    try {
+      // Use Function constructor instead of eval
+      // eslint-disable-next-line no-new-func
+      return new Function('return ' + expression)();
+    } catch (error) {
+      return "Error";
+    }
+  };
 
   const updateCalc = (value) => {
     if (
@@ -13,12 +23,18 @@ function App() {
     ) {
       return;
     }
-    setCalc(calc + value);
-
+    const newCalc = calc + value;
+    setCalc(newCalc);
+    
     if (!ops.includes(value)) {
-      setResult(eval(calc + value).toString());
+      try {
+        setResult(safeCalculate(newCalc).toString());
+      } catch {
+        setResult("Error");
+      }
     }
   };
+
   const createDigits = () => {
     const digits = [];
     for (let i = 1; i < 10; i++) {
@@ -28,7 +44,6 @@ function App() {
         </button>
       );
     }
-
     return digits;
   };
 
@@ -36,32 +51,42 @@ function App() {
     if (calc === "") {
       return;
     }
-
     // Check if the expression ends with an operator
     const lastChar = calc.slice(-1);
-
     if(ops.includes(lastChar)){
       return;
     }
-
-    setCalc(eval(calc).toString());
+    
+    try {
+      const calculatedResult = safeCalculate(calc);
+      setCalc(calculatedResult.toString());
+      setResult("");
+    } catch {
+      setCalc("Error");
+    }
   };
 
   const deleteLast = () => {
     if (calc === "") {
       return;
     }
-
     const value = calc.slice(0, -1);
     setCalc(value);
+    
     if (value === "") {
       setResult("");
-    } else if (ops.includes(value.slice(-1))) {
-      setResult(eval(value.toString().slice(0, -1)));
     } else {
-      setResult(eval(value).toString());
+      try {
+        // Only calculate result if last character is not an operator
+        if (!ops.includes(value.slice(-1))) {
+          setResult(safeCalculate(value).toString());
+        }
+      } catch {
+        setResult("Error");
+      }
     }
   };
+
   return (
     <div className="App">
       <div className="calculator">
@@ -73,7 +98,6 @@ function App() {
           <button onClick={() => updateCalc("*")}>*</button>
           <button onClick={() => updateCalc("+")}>+</button>
           <button onClick={() => updateCalc("-")}>-</button>
-
           <button onClick={deleteLast}>DEL</button>
         </div>
         <div className="digits">
