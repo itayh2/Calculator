@@ -3,6 +3,9 @@
 ## Overview
 A simple and intuitive web-based calculator application built using React, featuring responsive design and basic arithmetic operations.
 
+![image](https://github.com/user-attachments/assets/4b64121e-14a1-4fb9-9436-923e04dba2e4)
+
+
 ## Features
 - Supports addition, subtraction, multiplication, division
 - Decimal point input
